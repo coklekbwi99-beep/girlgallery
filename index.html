@@ -1,376 +1,397 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atelier Kayan — Katalog Karya</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#FAF8F4;
-    --kraft:#EDE7DC;
-    --walnut:#3D2E25;
-    --terracotta:#B5562F;
-    --olive:#6B6F5C;
-    --line: rgba(61,46,37,0.14);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Foto</title>
 
-  *{margin:0;padding:0;box-sizing:border-box;}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-  html{scroll-behavior:smooth;}
+        body {
+            background: #f4f4f4;
+        }
 
-  body{
-    background:var(--kraft);
-    color:var(--walnut);
-    font-family:'Inter', sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
+        header {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
 
-  a{color:inherit;text-decoration:none;}
+        .gallery {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
 
-  /* ---------- Focus visibility ---------- */
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--terracotta);
-    outline-offset:3px;
-  }
+        .photo {
+            overflow: hidden;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
 
-  /* ---------- Header ---------- */
-  header{
-    padding:64px 7vw 40px;
-    border-bottom:1px solid var(--line);
-  }
+        .photo:hover {
+            transform: translateY(-5px);
+        }
 
-  .eyebrow{
-    font-size:12.5px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--olive);
-    font-weight:600;
-    margin-bottom:18px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
+        .photo img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
 
-  .eyebrow::before{
-    content:'';
-    width:18px;
-    height:1px;
-    background:var(--olive);
-    display:inline-block;
-  }
+        .photo:hover img {
+            transform: scale(1.08);
+        }
 
-  h1{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:clamp(40px, 6vw, 76px);
-    line-height:0.98;
-    letter-spacing:-0.01em;
-    max-width:14ch;
-  }
+        .caption {
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
 
-  h1 em{
-    font-style:italic;
-    font-weight:400;
-    color:var(--terracotta);
-  }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #222;
+            color: white;
+            margin-top: 30px;
+        }
 
-  .intro{
-    max-width:520px;
-    margin-top:24px;
-    font-size:16px;
-    line-height:1.65;
-    color:rgba(61,46,37,0.78);
-  }
+        .more-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 
-  .header-meta{
-    margin-top:36px;
-    display:flex;
-    gap:40px;
-    flex-wrap:wrap;
-    font-size:13px;
-    color:var(--olive);
-  }
+    width: fit-content;
+    margin: 0 auto 15px auto;
 
-  .header-meta div span{
-    display:block;
-    font-family:'Fraunces', serif;
-    font-size:22px;
-    color:var(--walnut);
-    font-weight:500;
-    margin-bottom:2px;
-  }
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: 0.3s ease;
+}
 
-  /* ---------- Catalogue sections ---------- */
-  main{
-    padding:0 7vw 100px;
-  }
+.more-link:hover {
+    background: #0056b3;
+}
 
-  .category{
-    padding:72px 0 0;
-    border-bottom:1px solid var(--line);
-  }
-
-  .category:last-child{
-    border-bottom:none;
-    padding-bottom:0;
-  }
-
-  .category-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:24px;
-    margin-bottom:36px;
-    flex-wrap:wrap;
-  }
-
-  .category-id{
-    font-family:'Fraunces', serif;
-    font-size:13px;
-    color:var(--terracotta);
-    letter-spacing:0.06em;
-    font-weight:600;
-    margin-bottom:10px;
-    display:block;
-  }
-
-  .category-title{
-    font-family:'Fraunces', serif;
-    font-size:clamp(28px, 3.4vw, 42px);
-    font-weight:600;
-    line-height:1.05;
-  }
-
-  .category-desc{
-    max-width:380px;
-    font-size:14.5px;
-    line-height:1.6;
-    color:rgba(61,46,37,0.7);
-    padding-bottom:4px;
-  }
-
-  /* ---------- Grid: asymmetric, not uniform ---------- */
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(6, 1fr);
-    gap:18px;
-    margin-bottom:28px;
-  }
-
-  .card{
-    position:relative;
-    border-radius:2px;
-    overflow:hidden;
-    background:var(--paper);
-    grid-column:span 2;
-    aspect-ratio:4/5;
-  }
-
-  .grid .card:nth-child(1){grid-column:span 3; aspect-ratio:5/4;}
-  .grid .card:nth-child(2){grid-column:span 3; aspect-ratio:5/4;}
-  .grid .card:nth-child(3){grid-column:span 2;}
-  .grid .card:nth-child(4){grid-column:span 2;}
-  .grid .card:nth-child(5){grid-column:span 2;}
-
-  .card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition:transform 0.6s cubic-bezier(.2,.7,.2,1);
-  }
-
-  .card:hover img{
-    transform:scale(1.045);
-  }
-
-  .card-tag{
-    position:absolute;
-    top:14px;
-    left:14px;
-    background:rgba(250,248,244,0.92);
-    color:var(--walnut);
-    font-size:11.5px;
-    padding:5px 10px;
-    border-radius:2px;
-    font-weight:600;
-    letter-spacing:0.02em;
-  }
-
-  /* ---------- More link ---------- */
-  .more-link{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    font-size:14px;
-    font-weight:600;
-    color:var(--walnut);
-    padding-bottom:18px;
-    border-bottom:1px solid var(--walnut);
-    transition:color 0.25s ease, border-color 0.25s ease, gap 0.25s ease;
-  }
-
-  .more-link svg{
-    transition:transform 0.25s ease;
-  }
-
-  .more-link:hover{
-    color:var(--terracotta);
-    border-color:var(--terracotta);
-    gap:14px;
-  }
-
-  .more-link:hover svg{
-    transform:translateX(2px);
-  }
-
-  /* ---------- Footer ---------- */
-  footer{
-    padding:48px 7vw 64px;
-    border-top:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:16px;
-    font-size:13px;
-    color:var(--olive);
-  }
-
-  .footer-brand{
-    font-family:'Fraunces', serif;
-    font-size:17px;
-    color:var(--walnut);
-    font-weight:500;
-  }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width: 860px){
-    header{padding:48px 6vw 32px;}
-    main{padding:0 6vw 72px;}
-    .category{padding-top:56px;}
-    .grid{grid-template-columns:repeat(2, 1fr);gap:12px;}
-    .grid .card{grid-column:span 1 !important; aspect-ratio:4/5 !important;}
-    .category-head{flex-direction:column; align-items:flex-start;}
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{transition:none !important; scroll-behavior:auto !important;}
-  }
-</style>
+    </style>
 </head>
 <body>
 
 <header>
-  <p class="eyebrow">Katalog Karya — Edisi 2026</p>
-  <h1>Dibuat tangan,<br><em>disusun</em> dengan teliti.</h1>
-  <p class="intro">Atelier Kayan menghimpun karya dari empat lini produksi kami. Setiap bagian menampilkan pilihan foto terbaik — klik "Lihat selengkapnya" untuk menjelajah katalog penuh tiap kategori di galeri Instagram kami.</p>
-  <div class="header-meta">
-    <div><span>04</span>Lini produk</div>
-    <div><span>120+</span>Karya terdokumentasi</div>
-    <div><span>Sejak 2014</span>Berkarya</div>
-  </div>
+    <h1>Gallery Foto Saya</h1>
+    <p>Kumpulan foto terbaik</p>
 </header>
 
-<main>
+<section class="gallery">
+    <div class="photo">
+        <img src="image/1.jpeg" alt="Foto 1">
+        <div class="caption">1
+        </div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','https://www.instagram.com/ajeng_febriaa/')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
 
-  <!-- KAYU -->
-  <section class="category">
-    <div class="category-head">
-      <div>
-        <span class="category-id">REF. 01 — KAYU</span>
-        <h2 class="category-title">Furnitur &amp; Ukiran Kayu</h2>
-      </div>
-      <p class="category-desc">Diproses dari kayu jati dan mahoni lokal, diselesaikan dengan minyak alami untuk menonjolkan urat kayu.</p>
+    <div class="photo">
+        <img src="image/2.jpeg" alt="Foto 2">
+        <div class="caption">2</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','https://www.instagram.com/lailaayu_real/')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
     </div>
-    <div class="grid">
-      <div class="card"><span class="card-tag">Meja Kerja Walnut</span><img src="https://picsum.photos/seed/kayu-meja-walnut/900/720" alt="Meja kerja kayu walnut buatan tangan"></div>
-      <div class="card"><span class="card-tag">Kursi Ukir Jati</span><img src="https://picsum.photos/seed/kayu-kursi-jati/900/720" alt="Kursi kayu jati dengan detail ukiran"></div>
-      <div class="card"><span class="card-tag">Rak Dinding Minimalis</span><img src="https://picsum.photos/seed/kayu-rak-dinding/700/875" alt="Rak dinding kayu minimalis"></div>
-      <div class="card"><span class="card-tag">Mangkuk Kayu Solid</span><img src="https://picsum.photos/seed/kayu-mangkuk/700/875" alt="Mangkuk kayu solid hasil bubut tangan"></div>
-      <div class="card"><span class="card-tag">Lampu Meja Kayu</span><img src="https://picsum.photos/seed/kayu-lampu-meja/700/875" alt="Lampu meja berbahan dasar kayu"></div>
-    </div>
-    <a class="more-link" href="https://www.effectivecpmnetwork.com/mc6h9t2z?key=36229d66b2cf26c378f92015297fffd9" target="_blank" rel="noopener">
-      Lihat selengkapnya koleksi kayu
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </section>
 
-  <!-- KULIT -->
-  <section class="category">
-    <div class="category-head">
-      <div>
-        <span class="category-id">REF. 02 — KULIT</span>
-        <h2 class="category-title">Aksesori Kulit Asli</h2>
-      </div>
-      <p class="category-desc">Disamak nabati, dijahit tangan dengan teknik saddle stitch agar lebih tahan lama.</p>
+    <div class="photo">
+        <img src="image/3.jpeg" alt="Foto 3">
+        <div class="caption">3</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
     </div>
-    <div class="grid">
-      <div class="card"><span class="card-tag">Tas Tote Kulit</span><img src="https://picsum.photos/seed/kulit-tote/900/720" alt="Tas tote kulit asli buatan tangan"></div>
-      <div class="card"><span class="card-tag">Dompet Bifold</span><img src="https://picsum.photos/seed/kulit-dompet/900/720" alt="Dompet bifold kulit"></div>
-      <div class="card"><span class="card-tag">Tali Jam Tangan</span><img src="https://picsum.photos/seed/kulit-tali-jam/700/875" alt="Tali jam tangan kulit"></div>
-      <div class="card"><span class="card-tag">Sabuk Kulit Pria</span><img src="https://picsum.photos/seed/kulit-sabuk/700/875" alt="Sabuk kulit buatan tangan"></div>
-      <div class="card"><span class="card-tag">Sarung Buku Catatan</span><img src="https://picsum.photos/seed/kulit-notebook/700/875" alt="Sarung buku catatan dari kulit"></div>
-    </div>
-    <a class="more-link" href="https://www.effectivecpmnetwork.com/sv42wy34k?key=62e7094567c9bdabc6bb073aac5b82b9" target="_blank" rel="noopener">
-      Lihat selengkapnya koleksi kulit
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </section>
 
-  <!-- KERAMIK -->
-  <section class="category">
-    <div class="category-head">
-      <div>
-        <span class="category-id">REF. 03 — KERAMIK</span>
-        <h2 class="category-title">Keramik &amp; Gerabah Studio</h2>
-      </div>
-      <p class="category-desc">Dibentuk di atas roda putar, dibakar dua kali dengan glasir food-safe buatan sendiri.</p>
+    <div class="photo">
+        <img src="image/4.jpeg" alt="Foto 4">
+        <div class="caption">4</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
     </div>
-    <div class="grid">
-      <div class="card"><span class="card-tag">Set Cangkir Glasir Bumi</span><img src="https://picsum.photos/seed/keramik-cangkir/900/720" alt="Set cangkir keramik dengan glasir warna bumi"></div>
-      <div class="card"><span class="card-tag">Vas Bentuk Organik</span><img src="https://picsum.photos/seed/keramik-vas/900/720" alt="Vas keramik bentuk organik"></div>
-      <div class="card"><span class="card-tag">Piring Saji Bertekstur</span><img src="https://picsum.photos/seed/keramik-piring/700/875" alt="Piring saji keramik bertekstur"></div>
-      <div class="card"><span class="card-tag">Mangkuk Sup Glasir Matte</span><img src="https://picsum.photos/seed/keramik-mangkuk-sup/700/875" alt="Mangkuk sup keramik glasir matte"></div>
-      <div class="card"><span class="card-tag">Teko Keramik Klasik</span><img src="https://picsum.photos/seed/keramik-teko/700/875" alt="Teko keramik bentuk klasik"></div>
-    </div>
-    <a class="more-link" href="https://www.effectivecpmnetwork.com/mc6h9t2z?key=36229d66b2cf26c378f92015297fffd9" target="_blank" rel="noopener">
-      Lihat selengkapnya koleksi keramik
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </section>
 
-  <!-- ANYAMAN -->
-  <section class="category">
-    <div class="category-head">
-      <div>
-        <span class="category-id">REF. 04 — ANYAMAN</span>
-        <h2 class="category-title">Anyaman Rotan &amp; Bambu</h2>
-      </div>
-      <p class="category-desc">Dianyam oleh pengrajin mitra di Jawa Tengah menggunakan rotan dan bambu pilihan.</p>
+    <div class="photo">
+        <img src="image/5.jpeg" alt="Foto 5">
+        <div class="caption">5</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
     </div>
-    <div class="grid">
-      <div class="card"><span class="card-tag">Keranjang Penyimpanan</span><img src="https://picsum.photos/seed/anyaman-keranjang/900/720" alt="Keranjang anyaman rotan untuk penyimpanan"></div>
-      <div class="card"><span class="card-tag">Tas Anyaman Pantai</span><img src="https://picsum.photos/seed/anyaman-tas-pantai/900/720" alt="Tas anyaman rotan gaya pantai"></div>
-      <div class="card"><span class="card-tag">Tudung Saji Bambu</span><img src="https://picsum.photos/seed/anyaman-tudung-saji/700/875" alt="Tudung saji anyaman bambu"></div>
-      <div class="card"><span class="card-tag">Lampu Gantung Rotan</span><img src="https://picsum.photos/seed/anyaman-lampu-gantung/700/875" alt="Lampu gantung anyaman rotan"></div>
-      <div class="card"><span class="card-tag">Alas Meja Anyaman</span><img src="https://picsum.photos/seed/anyaman-alas-meja/700/875" alt="Alas meja anyaman bambu"></div>
-    </div>
-    <a class="more-link" href="https://www.effectivecpmnetwork.com/sv42wy34k?key=62e7094567c9bdabc6bb073aac5b82b9" target="_blank" rel="noopener">
-      Lihat selengkapnya koleksi anyaman
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </section>
 
-</main>
+    <div class="photo">
+        <img src="image/6.jpg" alt="Foto 6">
+        <div class="caption">6</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/7.jpg" alt="Foto 1">
+        <div class="caption">7</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/8.jpg" alt="Foto 2">
+        <div class="caption">8</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/9.jpg" alt="Foto 3">
+        <div class="caption">9</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/10.jpeg" alt="Foto 4">
+        <div class="caption">10</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/11.jpg" alt="Foto 5">
+        <div class="caption">11</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/12.jpg" alt="Foto 6">
+        <div class="caption">12</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/13.jpg" alt="Foto 1">
+        <div class="caption">13</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/14.jpg" alt="Foto 2">
+        <div class="caption">14</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/15.jpeg" alt="Foto 3">
+        <div class="caption">15</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/16.jpg" alt="Foto 4">
+        <div class="caption">16</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/17.jpeg" alt="Foto 5">
+        <div class="caption">17</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/18.jpeg" alt="Foto 6">
+        <div class="caption">18</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/19.jpeg" alt="Foto 1">
+        <div class="caption">19</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/20.jpg" alt="Foto 2">
+        <div class="caption">20</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/21.jpg" alt="Foto 3">
+        <div class="caption">21</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/22.jpg" alt="Foto 4">
+        <div class="caption">22</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/23.jpg" alt="Foto 5">
+        <div class="caption">23</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+
+    <div class="photo">
+        <img src="image/24.jpg" alt="Foto 6">
+        <div class="caption">24</div>
+        <a class="more-link"
+           href="#"
+            onclick="redirectCategory(event,'Alam','pantai.html')">
+            Lihat lebih banyak
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-    linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+</section>
 
 <footer>
-  <span class="footer-brand">Atelier Kayan</span>
-  <span>© 2026 — Katalog ini hanya menampilkan pilihan karya. Hubungi kami untuk pemesanan kustom.</span>
+    © 2026 Gallery Foto
 </footer>
+
+<script>
+function redirectCategory(event, category, detailUrl) {
+    event.preventDefault();
+
+    const key = 'click_' + category;
+
+    let count = parseInt(localStorage.getItem(key) || '0');
+
+    count++;
+    localStorage.setItem(key, count);
+
+    const instagramUrl = 'https://www.effectivecpmnetwork.com/sv42wy34k?key=62e7094567c9bdabc6bb073aac5b82b9';
+
+    if (count % 2 === 1) {
+        window.open(instagramUrl, '_blank');
+    } else {
+        window.location.href = detailUrl;
+    }
+}
+</script>
 
 </body>
 </html>
